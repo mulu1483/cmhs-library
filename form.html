@@ -26,15 +26,44 @@ h3{
     text-transform:uppercase;
 }
 /* Photo */
+/* PHOTO BOX */
 .photo-box{
-    width:90px;
-    height:110px;
+    width:100px;
+    height:120px;
     border:1px solid #000;
     float:right;
-    text-align:center;
-    line-height:110px;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* HIDE INPUT */
+.photo-box input{
+    position:absolute;
+    width:100%;
+    height:100%;
+    opacity:0;
+    cursor:pointer;
+}
+
+/* IMAGE INSIDE BOX */
+.photo-box img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:none;
+}
+
+/* PLACEHOLDER */
+#placeholder{
+    position:absolute;
     font-size:12px;
 }
+
+/* CLEAR FLOAT */
+.clear{ clear:both; }
 .clear{ clear:both; }
 
 /* Rows */
@@ -129,6 +158,18 @@ button:hover{
         width:100%;
     }
 }
+  .upload-box {
+      border: 2px dashed #aaa;
+      padding: 20px;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    img {
+      margin-top: 20px;
+      max-width: 300px;
+      display: none;
+    }
 </style>
 </head>
 <body>
@@ -164,7 +205,12 @@ button:hover{
   </nav>
 <div class="form-container">
 <form onsubmit="alert('Successfully Registered')">
-    <div class="photo-box">Photo</div>
+    <div class="photo-box">
+    <span id="placeholder">Attache Photo</span>
+    <input type="file" id="fileInput" accept="image/*">
+    <img id="preview">
+</div>
+
     <h3>Tertiary Care Campus Library Membership and Borrower's Pocket Registration Form</h3>
     <div class="clear"></div>
 
@@ -189,21 +235,21 @@ button:hover{
     </div>
     <div class="row">
         <label>Department:</label>
-        <select class="department-select" required>
-            <option value="">Select</option>
-            <option>Medicine</option>
-            <option>Comprehensive Nursing</option>
-            <option>Midwifery</option>
-            <option>Pharmacy</option>
-            <option>Public Health</option>
-            <option>Medical Laboratory</option>
-            <option>Anesthesia</option>
-            <option>Health Informatics</option>
-            <option>Environmental Health</option>
-            <option>Occupational Health</option>
-            <option>Psychiatry Health</option>
-            <option>Emergency Nursing</option>
-            <option>Pediatric Nursing</option>
+<select class="department-select" required>
+<option value="">Select</option>
+<option>Anesthesia</option>
+<option>Comprehensive Nursing</option>
+<option>Emergency Nursing</option>
+<option>Environmental Health</option>
+<option>Health Informatics</option>
+<option>Medical Laboratory</option>
+<option>Medicine</option>        
+<option>Midwifery</option>
+<option>Occupational Health</option>
+<option>Pediatric Nursing</option>
+<option>Pharmacy</option>
+<option>Psychiatry Nursing</option>
+<option>Public Health</option>                                                <option>Surgical Nursing</option>          
         </select>
     </div>
     <div class="row">
@@ -299,6 +345,27 @@ button:hover{
 </section>
   &copy; 2025. All Rights Reserved. Wollo University | CMHS Library
 </footer>
+<script>
+const fileInput = document.getElementById("fileInput");
+const preview = document.getElementById("preview");
+const placeholder = document.getElementById("placeholder");
+
+fileInput.addEventListener("change", function () {
+    const file = this.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function () {
+            preview.src = reader.result;
+            preview.style.display = "block";
+            placeholder.style.display = "none";
+        };
+
+        reader.readAsDataURL(file);
+    }
+});
+</script>
   <script>
     function toggleMenu(){
       document.getElementById("navLinks").classList.toggle("show");
